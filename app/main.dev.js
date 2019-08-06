@@ -73,7 +73,7 @@ app.on('ready', async () => {
     width: 1024,
     height: 728,
     webPreferences: {
-      devTools: process.env.NODE_ENV === 'development' && true
+      devTools: process.env.NODE_ENV === 'development' ? true : false
     }
   });
 
