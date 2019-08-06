@@ -1,0 +1,29 @@
+// @flow
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import routes from '../constants/routes';
+import styles from './Home.css';
+import Terminal from './Terminal';
+import Editor from './Editor';
+
+type Props = {};
+
+export default class Home extends Component<Props> {
+  props: Props;
+
+  componentDidMount() {
+    // const t = new Terminal();
+    // const e = new Editor();
+    // t.initTerminal();
+    // e.initEditor();
+  }
+
+  render() {
+    return (
+      <div className="" data-tid="container">
+        <Editor />
+        <Terminal />
+      </div>
+    );
+  }
+}
