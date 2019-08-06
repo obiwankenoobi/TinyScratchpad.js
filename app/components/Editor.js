@@ -3,24 +3,26 @@
 // const amdRequire   = amdLoader.require;
 // const amdDefine    = amdLoader.require.define;
 import React, {Component} from "react"
-import brace from 'brace';
 import AceEditor from 'react-ace';
 import * as fs from "fs";
+import tmp from 'tmp';
 import { ptyInstance } from "./PtyHelper";
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 
 
+const tmpobj = tmp.dirSync();
+
 
 function createExecutable(data) {
-    fs.writeFile("./__script__.js", data, e => {
+    fs.writeFile(`${tmpobj.name}/__script__.js`, data, e => {
         if (e) {
             throw new Error("couldnt create exacutable file. ERROR: ", e);
         }
     })
 }
 
-let buffer = "";
+
 let timer = null;
 
 function setTimer(cb) {
@@ -31,23 +33,11 @@ function setTimer(cb) {
 
 class Editor extends Component {
 
-    constructor(props) {
-        super(props) 
-        this.state = {
-            timer:0
-        }
-
-        
-        
-    };
-    
-
-
     onChange(newValue) {
         //this.setState({timer: new Date().getTime()});
         createExecutable(newValue)
         setTimer(() => {
-            ptyInstance.instance.write("node __script__.js\r");
+            ptyInstance.instance.write(`node ${tmpobj.name}/__script__.js\r`);
         })
         
     }

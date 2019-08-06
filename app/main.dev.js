@@ -73,9 +73,8 @@ app.on('ready', async () => {
     width: 1024,
     height: 728,
     webPreferences: {
-      devTools: process.env.NODE_ENV === 'development' ? true : false
-    },
-    icon: `${__dirname}/`
+      devTools: process.env.NODE_ENV === 'development' && true
+    }
   });
 
   const mb = menubar({
@@ -90,7 +89,8 @@ app.on('ready', async () => {
     // your app code here
   });
 
-  //mainWindow.loadURL(`file://${__dirname}/app.html`);
+
+  
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event

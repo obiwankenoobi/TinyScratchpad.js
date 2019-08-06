@@ -1,10 +1,10 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "ElectronReact",
+  "name": "mini-editor",
+  "productName": "MiniEditor",
   "version": "0.17.1",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "description": "Mininavbar javascript editor",
   "scripts": {
-    "fix":"rm -rf node_modules && yarn cache clean && yarn && yarn electron-rebuild && yarn dev",
+    "fix": "rm -rf node_modules && yarn cache clean && yarn && yarn electron-rebuild && yarn dev",
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
     "build-e2e": "cross-env E2E_BUILD=true yarn build",
@@ -58,7 +58,7 @@
   },
   "main": "./app/main.prod.js",
   "build": {
-    "productName": "ElectronReact",
+    "productName": "MiniEditor",
     "appId": "org.develar.ElectronReact",
     "files": [
       "app/dist/",
@@ -99,51 +99,21 @@
     "directories": {
       "buildResources": "resources",
       "output": "release"
-    },
-    "publish": {
-      "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate",
-      "private": false
     }
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
   },
   "author": {
-    "name": "Electron React Boilerplte Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://electron-react-boilerplate.js.org"
-  },
-  "contributors": [
-    {
-      "name": "Vikram Rangaraj",
-      "email": "vikr01@icloud.com",
-      "url": "https://github.com/vikr01"
-    },
-    {
-      "name": "Amila Welihinda",
-      "email": "amilajack@gmail.com",
-      "url": "https://github.com/amilajack"
-    }
-  ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues"
+    "name": "Artyum Sirshenko",
+    "email": "artium1@gmail.com",
+    "url": ""
   },
   "keywords": [
-    "electron",
-    "boilerplate",
-    "react",
-    "redux",
-    "flow",
-    "sass",
-    "webpack",
-    "hot",
-    "reload"
+    "mini editor",
+    "javascript editor",
+    "navbar editor",
+    "mac editor",
+    "mac node editor"
   ],
-  "homepage": "https://github.com/electron-react-boilerplate/electron-react-boilerplate#readme",
+  "homepage": "https://obiwankenoobi.github.io/public",
   "jest": {
     "testURL": "http://localhost/",
     "moduleNameMapper": {
@@ -224,7 +194,6 @@
     "flow-bin": "^0.77.0",
     "flow-runtime": "^0.17.0",
     "flow-typed": "^2.5.1",
-    "husky": "^1.1.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.6.0",
     "lint-staged": "^8.1.0",
@@ -265,6 +234,7 @@
     "electron-updater": "^3.2.3",
     "fs": "^0.0.1-security",
     "history": "^4.7.2",
+    "menubar": "^6.0.7",
     "monaco-editor": "^0.17.1",
     "node-pty": "^0.8.1",
     "react": "^16.6.3",
@@ -277,15 +247,13 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "source-map-support": "^0.5.9",
+    "tmp": "^0.1.0",
     "xterm": "^3.14.5"
   },
   "devEngines": {
     "node": ">=7.x",
     "npm": ">=4.x",
     "yarn": ">=0.21.3"
-  },
-  "collective": {
-    "url": "https://opencollective.com/electron-react-boilerplate-594"
   },
   "browserslist": "electron 1.6"
 }
