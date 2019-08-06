@@ -1,47 +1,39 @@
-import { Terminal, ITheme } from "xterm";
+import React, { Component } from 'react';
+import { Terminal } from "xterm";
+import * as fit from 'xterm/lib/addons/fit/fit';
 import * as os from "os";
 import * as pty from "node-pty";
-import * as fs from "fs";
 import { ptyInstance } from "./PtyHelper";
+import { xtermInstance } from "./XtermHelper";
+
+Terminal.applyAddon(fit); 
 let ptyProcess;
 
 
 // import React, { Component } from 'react';
 const xterm = new Terminal({  
-    theme: {
-        background: '#30312A',
-        
-    }
+    theme: { background: '#30312A' }
 });
 
-
-import React, { Component } from 'react';
+//xtermInstance.init(xterm);
 
 class TerminalClass extends Component {
     constructor(props) {
-        super(props);
-        this.state = {
-            timer:0
-        }
-        
+        super(props);        
     }
 
     componentDidMount() {
         this.initTerminal();
+        // window.addEventListener("resize", () => {
+        //     console.log("resize", window.innerWidth);
+        //     xterm.fit();
+        //     console.log(xtermInstance.instane)
+        //   })
     }
 
-
-    runScript() {
-        const self = this;
-        console.log("self", self)
-        // this.setState({
-        //     run:"node __script__.js"
-        // })
-        // ptyProcess.write("node __script__.js\r");
-    }
+    
 
     initTerminal() {
-        const self = this;
         // Initialize node-pty with an appropriate shell
         const shell = process.env[os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
         ptyProcess = pty.spawn(shell, [], {
@@ -53,42 +45,42 @@ class TerminalClass extends Component {
         });
      
         // Initialize xterm.js and attach it to the DOM
-        xterm.open(self.term);
-        //ptyProcess.write("node\r");
-        //xterm.clear();
+        xterm.open(this.term);
+        xterm.fit();
         // Setup communication between xterm.js and node-pty
         xterm.on('data', (data) => {
             ptyProcess.write(data);
         });
         ptyProcess.on('data', function (data) {
+
             xterm.write(data);
+            
         });
 
         ptyInstance.init(ptyProcess);
      }
 
      render() {
+         
          return(
-             <div>
-                <div style={{
-                    justifyContent:"center",
-                    alignContent:"center",
-                    alignItems:"center",
-                    justifyItems:"center",
-                    display:"flex",
-                    //padding:"10px",
-                    width:"100%",
-                    backgroundColor:"#30312A"
-                }}>
-                    <div 
-                        style={{width:"98%"}} 
-                        id="terminal" 
-                        ref={ref => this.term = ref}
-                    />
-                    
-                </div>
-                <button onClick={this.runScript}>run</button>
+
+            <div style={{
+                justifyContent:"center",
+                alignContent:"center",
+                alignItems:"center",
+                justifyItems:"center",
+                display:"flex",
+                //padding:"10px",
+                width:window.innerWidth,
+                backgroundColor:"#30312A"
+            }}>
+            <div 
+                style={{width:"98%"}} 
+                id="terminal" 
+                ref={ref => this.term = ref}
+            />  
             </div>
+
         )
      }
 

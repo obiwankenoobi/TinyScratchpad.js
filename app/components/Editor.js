@@ -10,10 +10,9 @@ import { ptyInstance } from "./PtyHelper";
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 
-console.log("ptyInstance", ptyInstance);
+
 
 function createExecutable(data) {
-    console.log("writing");
     fs.writeFile("./__script__.js", data, e => {
         if (e) {
             throw new Error("couldnt create exacutable file. ERROR: ", e);
@@ -22,6 +21,13 @@ function createExecutable(data) {
 }
 
 let buffer = "";
+let timer = null;
+
+function setTimer(cb) {
+    clearTimeout(timer);
+    timer = setTimeout(cb, 1000)
+}
+
 
 class Editor extends Component {
 
@@ -31,29 +37,25 @@ class Editor extends Component {
             timer:0
         }
 
-        this.timer = null;
+        
         
     };
     
 
-    setTimer(cb) {
-        clearTimeout(this.timer);
-        const timer = setTimeout(cb, 1000)
-    }
 
     onChange(newValue) {
-        console.log("newValue", newValue);
-        this.setState({timer: new Date().getTime()});
-        // this.setTimer(() => {
-        //     ptyInstance.instance.write("node __script__.js\r");
-        // })
+        //this.setState({timer: new Date().getTime()});
+        createExecutable(newValue)
+        setTimer(() => {
+            ptyInstance.instance.write("node __script__.js\r");
+        })
         
     }
 
     render() {
         return (
             <AceEditor
-                style={{width: "100%"}}
+                style={{width:"100%"}}
                 placeholder="Placeholder Text"
                 mode="javascript"
                 theme="monokai"

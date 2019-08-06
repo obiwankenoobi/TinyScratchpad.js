@@ -5,6 +5,8 @@ import routes from '../constants/routes';
 import styles from './Home.css';
 import Terminal from './Terminal';
 import Editor from './Editor';
+//import { xtermInstance } from "./XtermHelper";
+
 
 type Props = {};
 
@@ -16,6 +18,7 @@ export default class Home extends Component<Props> {
     // const e = new Editor();
     // t.initTerminal();
     // e.initEditor();
+
   }
 
   render() {

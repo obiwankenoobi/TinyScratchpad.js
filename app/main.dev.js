@@ -13,6 +13,7 @@
 import { app, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import { menubar } from 'menubar';
 import MenuBuilder from './menu';
 
 export default class AppUpdater {
@@ -70,10 +71,26 @@ app.on('ready', async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
-    height: 728
+    height: 728,
+    webPreferences: {
+      devTools: process.env.NODE_ENV === 'development' ? true : false
+    },
+    icon: `${__dirname}/`
   });
 
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
+  const mb = menubar({
+    show: false,
+    width: 600,
+    height: 800,
+    index:`file://${__dirname}/app.html`,
+  });
+
+  mb.on('ready', () => {
+    console.log('Menubar app is ready.');
+    // your app code here
+  });
+
+  //mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
