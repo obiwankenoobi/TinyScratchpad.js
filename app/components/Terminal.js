@@ -12,7 +12,7 @@ let ptyProcess;
 
 // import React, { Component } from 'react';
 const xterm = new Terminal({  
-    theme: { background: '#30312A' }
+    theme: { background: '#30312A', height:"100px" }
 });
 
 //xtermInstance.init(xterm);
@@ -70,12 +70,12 @@ class TerminalClass extends Component {
                 alignItems:"center",
                 justifyItems:"center",
                 display:"flex",
-                //padding:"10px",
                 width:window.innerWidth,
-                backgroundColor:"#30312A"
+                backgroundColor:"#30312A",
+               // height:"150px"
             }}>
             <div 
-                style={{width:"98%"}} 
+                style={{width:"98%", height:"300px"}} 
                 id="terminal" 
                 ref={ref => this.term = ref}
             />  

@@ -70,8 +70,8 @@ app.on('ready', async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 600,
+    height: 800,
     webPreferences: {
       devTools: process.env.NODE_ENV === 'development' ? true : false
     }

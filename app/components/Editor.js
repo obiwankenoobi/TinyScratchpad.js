@@ -37,7 +37,7 @@ class Editor extends Component {
         //this.setState({timer: new Date().getTime()});
         createExecutable(newValue)
         setTimer(() => {
-            ptyInstance.instance.write(`node ${tmpobj.name}/__script__.js\r`);
+            ptyInstance.instance.write(`node ${tmpobj.name}/__script__.js\r`);  
         })
         
     }
@@ -46,7 +46,7 @@ class Editor extends Component {
         return (
             <AceEditor
                 style={{width:"100%"}}
-                placeholder="Placeholder Text"
+                placeholder="Start typing (:"
                 mode="javascript"
                 theme="monokai"
                 name="blah2"
