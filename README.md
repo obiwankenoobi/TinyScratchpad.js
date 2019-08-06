@@ -5,6 +5,5 @@ run snippets of code directly through the navbar.
 [download](https://obiwankenoobi.github.io/projects.html)
 <br>
 <br>
-![Screenshot](https://media.giphy.com/media/JTnLLOv24eKEsYNQmi/giphy.gif)
 
-
+<img src="https://media.giphy.com/media/JTnLLOv24eKEsYNQmi/giphy.gif" width="100%">
