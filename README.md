@@ -5,5 +5,5 @@ run snippets of code directly through the navbar.
 [download](https://obiwankenoobi.github.io/projects.html)
 <br>
 <br>
-<img width="400px" src="./app/img/mini_editor.gif"/>
+<img width="400px" src="mini_editor.gif"/>
 
