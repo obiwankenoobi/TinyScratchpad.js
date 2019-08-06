@@ -6,5 +6,5 @@ run snippets of code directly through the navbar.
 <br>
 <br>
 
-<img src="https://media.giphy.com/media/VDYGW8UtVzUKXY77z3/giphy.gif" width="70%">
+<img src="https://media.giphy.com/media/VDYGW8UtVzUKXY77z3/giphy.gif">
 
