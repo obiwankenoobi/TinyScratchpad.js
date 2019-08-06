@@ -7,15 +7,16 @@ import { ptyInstance } from "./PtyHelper";
 import { xtermInstance } from "./XtermHelper";
 
 Terminal.applyAddon(fit); 
+
 let ptyProcess;
+let editorEdit = false;
 
 
-// import React, { Component } from 'react';
 const xterm = new Terminal({  
     theme: { background: '#30312A', height:"100px" }
 });
 
-//xtermInstance.init(xterm);
+xtermInstance.init(xterm);
 
 class TerminalClass extends Component {
     constructor(props) {
@@ -24,14 +25,8 @@ class TerminalClass extends Component {
 
     componentDidMount() {
         this.initTerminal();
-        // window.addEventListener("resize", () => {
-        //     console.log("resize", window.innerWidth);
-        //     xterm.fit();
-        //     console.log(xtermInstance.instane)
-        //   })
     }
 
-    
 
     initTerminal() {
         // Initialize node-pty with an appropriate shell
@@ -51,10 +46,10 @@ class TerminalClass extends Component {
         xterm.on('data', (data) => {
             ptyProcess.write(data);
         });
-        ptyProcess.on('data', function (data) {
 
-            xterm.write(data);
-            
+        
+        ptyProcess.on('data', function x(data) {
+            xterm.write(data);            
         });
 
         ptyInstance.init(ptyProcess);
@@ -63,7 +58,6 @@ class TerminalClass extends Component {
      render() {
          
          return(
-
             <div style={{
                 justifyContent:"center",
                 alignContent:"center",
@@ -72,7 +66,6 @@ class TerminalClass extends Component {
                 display:"flex",
                 width:window.innerWidth,
                 backgroundColor:"#30312A",
-               // height:"150px"
             }}>
             <div 
                 style={{width:"98%", height:"300px"}} 

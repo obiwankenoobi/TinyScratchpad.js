@@ -1,18 +1,14 @@
-// import * as path from 'path';
-// import amdLoader from 'monaco-editor/min/vs/loader.js';
-// const amdRequire   = amdLoader.require;
-// const amdDefine    = amdLoader.require.define;
 import React, {Component} from "react"
 import AceEditor from 'react-ace';
 import * as fs from "fs";
 import tmp from 'tmp';
 import { ptyInstance } from "./PtyHelper";
+import { xtermInstance } from "./XtermHelper";
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
-
+import { EventEmitter } from "electron";
 
 const tmpobj = tmp.dirSync();
-
 
 function createExecutable(data) {
     fs.writeFile(`${tmpobj.name}/__script__.js`, data, e => {
@@ -22,14 +18,12 @@ function createExecutable(data) {
     })
 }
 
-
 let timer = null;
 
 function setTimer(cb) {
     clearTimeout(timer);
-    timer = setTimeout(cb, 1000)
+    timer = setTimeout(cb, 1500)
 }
-
 
 class Editor extends Component {
 
@@ -37,7 +31,8 @@ class Editor extends Component {
         //this.setState({timer: new Date().getTime()});
         createExecutable(newValue)
         setTimer(() => {
-            ptyInstance.instance.write(`node ${tmpobj.name}/__script__.js\r`);  
+            ptyInstance.instance.write(`node ${tmpobj.name}/__script__.js\r`);
+            //xtermInstance.emit("editor")
         })
         
     }
