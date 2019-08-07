@@ -11,7 +11,7 @@ import { EventEmitter } from "electron";
 const tmpobj = tmp.dirSync();
 
 function createExecutable(data) {
-    fs.writeFile(`${tmpobj.name}/__script__.js`, data, e => {
+    fs.writeFile(`${tmpobj.name}/★.js`, data, e => {
         if (e) {
             throw new Error("couldnt create exacutable file. ERROR: ", e);
         }
@@ -31,7 +31,7 @@ class Editor extends Component {
         //this.setState({timer: new Date().getTime()});
         createExecutable(newValue)
         setTimer(() => {
-            ptyInstance.instance.write(`node ${tmpobj.name}/__script__.js\r`);
+            ptyInstance.instance.write(`node ${tmpobj.name}/★\r`);
             //xtermInstance.emit("editor")
         })
         

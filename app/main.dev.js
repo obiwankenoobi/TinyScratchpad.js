@@ -89,7 +89,7 @@ app.on('ready', async () => {
     // your app code here
   });
 
-
+  //mainWindow.loadURL(`file://${__dirname}/app.html`);
   
 
   // @TODO: Use 'ready-to-show' event

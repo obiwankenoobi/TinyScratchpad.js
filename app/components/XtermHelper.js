@@ -4,6 +4,7 @@ class XtermHelper {
     constructor() {
         this.instane = null
         this.emitter = new EventEmitter();
+        this.xtermInstance = false;
     }
 
     emit(event) {

@@ -20,7 +20,8 @@ xtermInstance.init(xterm);
 
 class TerminalClass extends Component {
     constructor(props) {
-        super(props);        
+        super(props);
+        this.termFocus = false;        
     }
 
     componentDidMount() {
@@ -48,9 +49,28 @@ class TerminalClass extends Component {
         });
 
         
-        ptyProcess.on('data', function x(data) {
-            xterm.write(data);            
+        ptyProcess.on('data', (data) => {
+            console.log("is focused", this.termFocus)
+            if (!this.termFocus) {
+                
+                //xterm.write('\x1b[2K\r');
+                //xterm.write('\x1b[1A\r');
+            }
+
+            xterm.write(data);  
         });
+
+        xterm.on("focus", () => {
+            console.log("focus")
+            this.termFocus = true;
+        })
+
+        xterm.on("blur", () => {
+            console.log("blur")
+            this.termFocus = false;
+        })
+
+
 
         ptyInstance.init(ptyProcess);
      }
