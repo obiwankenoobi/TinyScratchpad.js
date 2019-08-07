@@ -3,12 +3,18 @@ import AceEditor from 'react-ace';
 import * as fs from "fs";
 import tmp from 'tmp';
 import { ptyInstance } from "./PtyHelper";
+
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
+import 'brace/mode/html';
+import 'brace/theme/xcode';
+import 'brace/snippets/html';
+import 'brace/ext/language_tools';
+
 import * as babel from "@babel/standalone";
 import * as path from "path";
 
-console.log("babel", babel)
+
 
 
 class Editor extends Component {
