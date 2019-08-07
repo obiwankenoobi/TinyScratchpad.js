@@ -5,7 +5,10 @@ import tmp from 'tmp';
 import { ptyInstance } from "./PtyHelper";
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
+import * as babel from "@babel/standalone";
+import * as path from "path";
 
+console.log("babel", babel)
 
 
 class Editor extends Component {
@@ -24,11 +27,16 @@ class Editor extends Component {
     }
 
     createExecutable = data => {
-        fs.writeFile(`${this.tmpobj.name}`, data, e => {
-            if (e) {
-                throw new Error("couldnt create exacutable file. ERROR: ", e);
-            }
-        })
+        try {
+            const result = babel.transform(data, { presets: ['es2015', 'react'] }).code;
+            fs.writeFile(`${this.tmpobj.name}`, result, e => {
+                if (e) {
+                    throw new Error("couldnt create exacutable file. ERROR: ", e);
+                }
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     setTimer = cb => {
