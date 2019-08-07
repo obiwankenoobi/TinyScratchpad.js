@@ -4,35 +4,27 @@ import * as fit from 'xterm/lib/addons/fit/fit';
 import * as os from "os";
 import * as pty from "node-pty";
 import { ptyInstance } from "./PtyHelper";
-import { xtermInstance } from "./XtermHelper";
 
 Terminal.applyAddon(fit); 
 
-let ptyProcess;
-let editorEdit = false;
-
-
-const xterm = new Terminal({  
-    theme: { background: '#30312A', height:"100px" }
-});
-
-xtermInstance.init(xterm);
 
 class TerminalClass extends Component {
     constructor(props) {
-        super(props);
-        this.termFocus = false;        
+        super(props);       
+        this.ptyProcess;
+        this.xterm = new Terminal({  
+            theme: { background: '#30312A', height:"100px" }
+        });
     }
 
     componentDidMount() {
         this.initTerminal();
     }
 
-
-    initTerminal() {
+    initTerminal = () => {
         // Initialize node-pty with an appropriate shell
         const shell = process.env[os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
-        ptyProcess = pty.spawn(shell, [], {
+        this.ptyProcess = pty.spawn(shell, [], {
             name: 'xterm-color',
             cols: 80,
             rows: 30,
@@ -41,38 +33,19 @@ class TerminalClass extends Component {
         });
      
         // Initialize xterm.js and attach it to the DOM
-        xterm.open(this.term);
-        xterm.fit();
+        this.xterm.open(this.term);
+        this.xterm.fit();
         // Setup communication between xterm.js and node-pty
-        xterm.on('data', (data) => {
-            ptyProcess.write(data);
+        this.xterm.on('data', (data) => {
+            this.ptyProcess.write(data);
         });
 
         
-        ptyProcess.on('data', (data) => {
-            console.log("is focused", this.termFocus)
-            if (!this.termFocus) {
-                
-                //xterm.write('\x1b[2K\r');
-                //xterm.write('\x1b[1A\r');
-            }
-
-            xterm.write(data);  
+        this.ptyProcess.on('data', (data) => {
+            this.xterm.write(data);  
         });
 
-        xterm.on("focus", () => {
-            console.log("focus")
-            this.termFocus = true;
-        })
-
-        xterm.on("blur", () => {
-            console.log("blur")
-            this.termFocus = false;
-        })
-
-
-
-        ptyInstance.init(ptyProcess);
+        ptyInstance.init(this.ptyProcess);
      }
 
      render() {

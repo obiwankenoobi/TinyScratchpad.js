@@ -13,14 +13,6 @@ type Props = {};
 export default class Home extends Component<Props> {
   props: Props;
 
-  componentDidMount() {
-    // const t = new Terminal();
-    // const e = new Editor();
-    // t.initTerminal();
-    // e.initEditor();
-
-  }
-
   render() {
     return (
       <div className="" data-tid="container">

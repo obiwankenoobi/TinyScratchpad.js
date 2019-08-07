@@ -3,38 +3,37 @@ import AceEditor from 'react-ace';
 import * as fs from "fs";
 import tmp from 'tmp';
 import { ptyInstance } from "./PtyHelper";
-import { xtermInstance } from "./XtermHelper";
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
-import { EventEmitter } from "electron";
 
-const tmpobj = tmp.fileSync({postfix: '_script_.js' });
 
-function createExecutable(data) {
-    fs.writeFile(`${tmpobj.name}`, data, e => {
-        if (e) {
-            throw new Error("couldnt create exacutable file. ERROR: ", e);
-        }
-    })
-}
-
-let timer = null;
-
-function setTimer(cb) {
-    clearTimeout(timer);
-    timer = setTimeout(cb, 1500)
-}
 
 class Editor extends Component {
+    constructor(props) {
+        super(props);
+        this.timer = null;
+        this.tmpobj = tmp.fileSync({postfix: '_script_.js' });
+    }
 
-    onChange(newValue) {
-        //this.setState({timer: new Date().getTime()});
-        createExecutable(newValue)
-        setTimer(() => {
-            ptyInstance.instance.write(`node ${tmpobj.name}\r`);
-            //xtermInstance.emit("editor")
+    onChange = newValue => {
+        this.createExecutable(newValue)
+        this.setTimer(() => {
+            ptyInstance.instance.write(`node ${this.tmpobj.name}\r`);
         })
         
+    }
+
+    createExecutable = data => {
+        fs.writeFile(`${this.tmpobj.name}`, data, e => {
+            if (e) {
+                throw new Error("couldnt create exacutable file. ERROR: ", e);
+            }
+        })
+    }
+
+    setTimer = cb => {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(cb, 1500)
     }
 
     render() {
