@@ -8,10 +8,10 @@ import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 import { EventEmitter } from "electron";
 
-const tmpobj = tmp.dirSync();
+const tmpobj = tmp.fileSync({postfix: '_script_.js' });
 
 function createExecutable(data) {
-    fs.writeFile(`${tmpobj.name}/★.js`, data, e => {
+    fs.writeFile(`${tmpobj.name}`, data, e => {
         if (e) {
             throw new Error("couldnt create exacutable file. ERROR: ", e);
         }
@@ -31,7 +31,7 @@ class Editor extends Component {
         //this.setState({timer: new Date().getTime()});
         createExecutable(newValue)
         setTimer(() => {
-            ptyInstance.instance.write(`node ${tmpobj.name}/★\r`);
+            ptyInstance.instance.write(`node ${tmpobj.name}\r`);
             //xtermInstance.emit("editor")
         })
         
