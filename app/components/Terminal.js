@@ -4,7 +4,10 @@ import * as fit from 'xterm/lib/addons/fit/fit';
 import * as os from "os";
 import * as pty from "node-pty";
 import { ptyInstance } from "./PtyHelper";
-
+import { xtermInstance } from "./XtermHelper";
+import colors from "../constants/colors"
+import ansiEscapes from "ansi-escapes";
+console.log("ansiEscapes", ansiEscapes)
 Terminal.applyAddon(fit); 
 
 
@@ -13,7 +16,7 @@ class TerminalClass extends Component {
         super(props);       
         this.ptyProcess;
         this.xterm = new Terminal({  
-            theme: { background: '#30312A', height:"100px" }
+            theme: { background: colors.terminal.dracula, height:"100px" }
         });
     }
 
@@ -37,14 +40,24 @@ class TerminalClass extends Component {
         this.xterm.fit();
         // Setup communication between xterm.js and node-pty
         this.xterm.on('data', (data) => {
+            console.log("data")
+
             this.ptyProcess.write(data);
         });
 
-        
+        this.xterm.onLineFeed((data) => {
+            // this.xterm.write(ansiEscapes.cursorPrevLine); 
+            // this.xterm.write(ansiEscapes.cursorLeft); 
+        });
+
+        //this.xterm.write(`export PS1='> '\r`);
+
+  
         this.ptyProcess.on('data', (data) => {
             this.xterm.write(data);  
         });
 
+        xtermInstance.init(this.xterm);
         ptyInstance.init(this.ptyProcess);
      }
 
@@ -58,7 +71,7 @@ class TerminalClass extends Component {
                 justifyItems:"center",
                 display:"flex",
                 width:window.innerWidth,
-                backgroundColor:"#30312A",
+                backgroundColor:colors.terminal.dracula,
             }}>
             <div 
                 style={{width:"98%", height:"300px"}} 

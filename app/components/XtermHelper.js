@@ -2,7 +2,7 @@ import EventEmitter from "events"
 
 class XtermHelper {
     constructor() {
-        this.instane = null
+        this.instance = null
         this.emitter = new EventEmitter();
         this.xtermInstance = false;
     }
@@ -12,7 +12,7 @@ class XtermHelper {
     }
 
     init(instance) {
-        this.instane = instance;
+        this.instance = instance;
     }
 }
 

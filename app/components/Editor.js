@@ -1,15 +1,20 @@
 import React, {Component} from "react"
-import AceEditor from 'react-ace';
+import AceEditor from "react-ace";
 import * as fs from "fs";
 import tmp from 'tmp';
 import { ptyInstance } from "./PtyHelper";
+import { xtermInstance } from "./XtermHelper";
+import ansiEscapes from "ansi-escapes";
 
-import 'brace/mode/javascript';
-import 'brace/theme/monokai';
-import 'brace/mode/html';
-import 'brace/theme/xcode';
-import 'brace/snippets/html';
-import 'brace/ext/language_tools';
+import "brace/mode/javascript";
+import "brace/theme/monokai";
+import "brace/theme/solarized_dark";
+import "brace/theme/textmate";
+import "brace/theme/dracula";
+import "brace/mode/html";
+import "brace/theme/xcode";
+import "brace/snippets/html";
+import "brace/ext/language_tools";
 
 import * as babel from "@babel/standalone";
 import * as path from "path";
@@ -56,7 +61,7 @@ class Editor extends Component {
                 style={{width:"100%"}}
                 placeholder="Start typing (:"
                 mode="javascript"
-                theme="monokai"
+                theme="dracula"
                 name="blah2"
                 onLoad={this.onLoad}
                 onChange={this.onChange}
