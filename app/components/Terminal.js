@@ -42,7 +42,6 @@ class TerminalClass extends Component {
             env: process.env,
             handleFlowControl: true
         });
-         console.log("process.env", process.env)
 
         
         // Initialize xterm.js and attach it to the DOM

@@ -63,13 +63,10 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('will-quit', () => {
-  // Unregister a shortcut.
-  // globalShortcut.unregister('Command+S')
 
-  // Unregister all shortcuts.
-  globalShortcut.unregisterAll()
-});
+app.on("quit", () => {
+  exec("rm /var/tmp/srtch-*")
+})
 
 app.on('ready', async () => {
   if (
