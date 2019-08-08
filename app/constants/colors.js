@@ -1,5 +1,5 @@
 export default {
     terminal: {
-        dracula:"#444758"
+        dracula:"#565968"
     }
 }

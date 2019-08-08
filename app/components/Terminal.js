@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Terminal } from "xterm";
-import * as fit from 'xterm/lib/addons/fit/fit';
-import * as os from "os";
-import * as pty from "node-pty";
-import { ptyInstance } from "./PtyHelper";
-import { xtermInstance } from "./XtermHelper";
-import colors from "../constants/colors"
-import ansiEscapes from "ansi-escapes";
-console.log("ansiEscapes", ansiEscapes)
-Terminal.applyAddon(fit); 
+import * as fit             from 'xterm/lib/addons/fit/fit';
+import * as os              from "os";
+import * as pty             from "node-pty";
+import { Terminal }         from "xterm";
+import { ptyInstance   }    from "./PtyHelper";
+import { xtermInstance }    from "./XtermHelper";
+import colors               from "../constants/colors"
+import ansiEscapes          from "ansi-escapes";
 
+Terminal.applyAddon(fit); 
 
 class TerminalClass extends Component {
     constructor(props) {
@@ -40,20 +39,19 @@ class TerminalClass extends Component {
         this.xterm.fit();
         // Setup communication between xterm.js and node-pty
         this.xterm.on('data', (data) => {
-            console.log("data")
-
             this.ptyProcess.write(data);
         });
-
+        //this.xterm.write(ansiEscapes.eraseScreen); 
         this.xterm.onLineFeed((data) => {
             // this.xterm.write(ansiEscapes.cursorPrevLine); 
-            // this.xterm.write(ansiEscapes.cursorLeft); 
+            // this.xterm.write(ansiEscapes.eraseScreen); 
         });
 
         //this.xterm.write(`export PS1='> '\r`);
 
   
         this.ptyProcess.on('data', (data) => {
+            console.log("data", data)
             this.xterm.write(data);  
         });
 

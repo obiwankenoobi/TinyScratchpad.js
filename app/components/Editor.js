@@ -1,10 +1,13 @@
 import React, {Component} from "react"
-import AceEditor from "react-ace";
-import * as fs from "fs";
-import tmp from 'tmp';
-import { ptyInstance } from "./PtyHelper";
-import { xtermInstance } from "./XtermHelper";
-import ansiEscapes from "ansi-escapes";
+import * as fs            from "fs";
+import * as babel         from "@babel/standalone";
+import * as path          from "path";
+import AceEditor          from "react-ace";
+import tmp                from 'tmp';
+import { ptyInstance   }  from "./PtyHelper";
+import { xtermInstance }  from "./XtermHelper";
+import ansiEscapes        from "ansi-escapes";
+
 
 import "brace/mode/javascript";
 import "brace/theme/monokai";
@@ -16,8 +19,6 @@ import "brace/theme/xcode";
 import "brace/snippets/html";
 import "brace/ext/language_tools";
 
-import * as babel from "@babel/standalone";
-import * as path from "path";
 
 
 
@@ -25,7 +26,7 @@ import * as path from "path";
 class Editor extends Component {
     constructor(props) {
         super(props);
-        this.timer = null;
+        this.timer  = null;
         this.tmpobj = tmp.fileSync({postfix: '_script_.js' });
     }
 
@@ -41,9 +42,8 @@ class Editor extends Component {
         try {
             const result = babel.transform(data, { presets: ['es2015', 'react'] }).code;
             fs.writeFile(`${this.tmpobj.name}`, result, e => {
-                if (e) {
+                if (e) 
                     throw new Error("couldnt create exacutable file. ERROR: ", e);
-                }
             })
         } catch (e) {
             console.log(e)
@@ -58,17 +58,23 @@ class Editor extends Component {
     render() {
         return (
             <AceEditor
-                style={{width:"100%"}}
-                placeholder="Start typing (:"
+                ref={ref => this.editor = ref}
+                width="100%"
+                //width
+                placeholder={`  Start typing (:`}
                 mode="javascript"
                 theme="dracula"
                 name="blah2"
-                onLoad={this.onLoad}
+                onLoad={(editor) => { 
+                    editor.renderer.setPadding(10);
+                    editor.$selectionStyle.backgroundColor = "red"
+                    console.log(editor)
+                    
+                 }}
                 onChange={this.onChange}
                 fontSize={14}
                 showPrintMargin={true}
                 showGutter={true}
-                highlightActiveLine={true}
                 value={``}
                 setOptions={{
                     enableBasicAutocompletion: true,
@@ -76,6 +82,12 @@ class Editor extends Component {
                     enableSnippets: true,
                     showLineNumbers: true,
                     tabSize: 2,
+                    highlightSelectedWord:true,
+                    highlightActiveLine:false,
+                    showGutter:false,
+                    selectionStyle: {
+                        backgroundColor: "blue"
+                    }
                 }}
             />
         )
