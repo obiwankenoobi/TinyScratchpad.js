@@ -3,6 +3,7 @@
 We dont always want to create new project to test snippets of code. Somtimes we just need to run 3-4 lines of code to test a method or the result of some function you just thought about. I created this project exactly to address this issue. (:
 run snippets of code directly through the navbar. 
 [download](https://obiwankenoobi.github.io/projects.html)
+
 <br>
 <br>
 
@@ -12,12 +13,15 @@ run snippets of code directly through the navbar.
 
 ✅ **Quick navbar access**
 
-✅ **Complete Bash in terminal**
+✅ **Complete Shell in terminal**
 
-✅ **See results in live**
+✅ **Code run while typing**
+
+✅ **Save script**
 
 to Quit `Command + Q`
+
 to Save `Command + S`
 
-<img src="https://media.giphy.com/media/mEQHHgyDm8LTzEag00/giphy.gif">
-
+<!-- <img src="https://media.giphy.com/media/mEQHHgyDm8LTzEag00/giphy.gif"> -->
+<img src="speedup_opt2.gif"/>

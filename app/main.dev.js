@@ -95,7 +95,6 @@ app.on('ready', async () => {
     browserWindow: {
       width: 600,
       height: 820,
-      
     },
     index:`file://${__dirname}/app.html`,
     resizable: false
