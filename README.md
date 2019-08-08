@@ -12,7 +12,9 @@ run snippets of code directly through the navbar.
 
 ✅ **Quick navbar access**
 
-✅ **See results while you type**
+✅ **Complete Bash in terminal**
+
+✅ **See results in live**
 
 to Quit `Command + Q`
 
