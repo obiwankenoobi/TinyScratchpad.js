@@ -8,11 +8,16 @@ import { xtermInstance }    from "./XtermHelper";
 import colors               from "../constants/colors"
 import ansiEscapes          from "ansi-escapes";
 
+
+
 Terminal.applyAddon(fit); 
 
 class TerminalClass extends Component {
     constructor(props) {
         super(props);       
+        this.state = {
+            loading: true
+        }
         this.ptyProcess;
         this.xterm = new Terminal({  
             theme: { background: colors.dracula.sub, height:"100px" }
@@ -21,11 +26,7 @@ class TerminalClass extends Component {
 
     componentDidMount() {
         this.initTerminal();
-        this.xterm.onResize(() => {
-        this.xterm.fit();
-        })
-
-        
+        setTimeout(() => this.setState({ loading:false }), 1500)
     }
 
     initTerminal = () => {
@@ -54,12 +55,7 @@ class TerminalClass extends Component {
         });
         
         this.ptyProcess.on('data', (data) => {
-            console.log("data outside", data)
-            if (!data.includes("node /var/tmp/tmp-")) {
-                console.log("data inside", data)
-                this.xterm.write(data); 
-            }
- 
+            this.xterm.write(data); 
         });
 
         this.ptyProcess.write("export PS1='☺️ '\n"); 
@@ -70,8 +66,8 @@ class TerminalClass extends Component {
      }
 
      render() {
-         
-         return(
+         const { loading } = this.state;
+         return (
             <div style={{
                 justifyContent:"center",
                 alignContent:"center",
@@ -81,13 +77,12 @@ class TerminalClass extends Component {
                 width:window.innerWidth,
                 backgroundColor:colors.dracula.sub,
             }}>
-            <div 
-                style={{width:"98%", height:"300px"}} 
-                id="terminal" 
-                ref={ref => this.term = ref}
-            />  
+                <div 
+                    style={{width:"98%", height:"300px", visibility: loading ? "hidden" : "visible"}} 
+                    id="terminal" 
+                    ref={ref => this.term = ref}
+                />             
             </div>
-
         )
      }
 
