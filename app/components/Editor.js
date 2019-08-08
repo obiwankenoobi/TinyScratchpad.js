@@ -19,21 +19,20 @@ import "brace/theme/xcode";
 import "brace/snippets/html";
 import "brace/ext/language_tools";
 
-
-
+tmp.setGracefulCleanup();
 
 
 class Editor extends Component {
     constructor(props) {
         super(props);
         this.timer  = null;
-        this.tmpobj = tmp.fileSync({postfix: '_script_.js' });
+        this.tmpobj = tmp.fileSync({postfix: '.js', dir:"/var/tmp" });
     }
 
     onChange = newValue => {
         this.createExecutable(newValue)
         this.setTimer(() => {
-            ptyInstance.instance.write(`node ${this.tmpobj.name}\r`);
+            ptyInstance.instance.write(`node ${this.tmpobj.name}\n`);
         })
         
     }
@@ -42,8 +41,7 @@ class Editor extends Component {
         try {
             const result = babel.transform(data, { presets: ['es2015', 'react'] }).code;
             fs.writeFile(`${this.tmpobj.name}`, result, e => {
-                if (e) 
-                    throw new Error("couldnt create exacutable file. ERROR: ", e);
+                if (e) throw new Error("couldnt create exacutable file. ERROR: ", e);
             })
         } catch (e) {
             console.log(e)

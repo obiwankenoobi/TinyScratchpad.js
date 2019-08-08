@@ -13,6 +13,9 @@ type Props = {};
 export default class Home extends Component<Props> {
   props: Props;
 
+  componentDidMount() {
+
+  }
   render() {
     return (
       <div className="" data-tid="container">

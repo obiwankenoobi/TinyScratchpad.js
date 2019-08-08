@@ -21,9 +21,16 @@ class TerminalClass extends Component {
 
     componentDidMount() {
         this.initTerminal();
+        this.xterm.onResize(() => {
+        this.xterm.fit();
+        })
+
+        
     }
 
     initTerminal = () => {
+        process.env.PROMPT_EOL_MARK = "";
+
         // Initialize node-pty with an appropriate shell
         const shell = process.env[os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
         this.ptyProcess = pty.spawn(shell, [], {
@@ -31,29 +38,32 @@ class TerminalClass extends Component {
             cols: 80,
             rows: 30,
             cwd: process.cwd(),
-            env: process.env
+            env: process.env,
+            handleFlowControl: true
         });
-     
+         console.log("process.env", process.env)
+
+        
         // Initialize xterm.js and attach it to the DOM
         this.xterm.open(this.term);
         this.xterm.fit();
+
         // Setup communication between xterm.js and node-pty
         this.xterm.on('data', (data) => {
             this.ptyProcess.write(data);
         });
-        //this.xterm.write(ansiEscapes.eraseScreen); 
-        this.xterm.onLineFeed((data) => {
-            // this.xterm.write(ansiEscapes.cursorPrevLine); 
-            // this.xterm.write(ansiEscapes.eraseScreen); 
-        });
-
-        //this.xterm.write(`export PS1='> '\r`);
-
-  
+        
         this.ptyProcess.on('data', (data) => {
-            console.log("data", data)
-            this.xterm.write(data);  
+            console.log("data outside", data)
+            if (!data.includes("node /var/tmp/tmp-")) {
+                console.log("data inside", data)
+                this.xterm.write(data); 
+            }
+ 
         });
+
+        this.ptyProcess.write("export PS1='☺️ '\n"); 
+        this.ptyProcess.write("clear\n"); 
 
         xtermInstance.init(this.xterm);
         ptyInstance.init(this.ptyProcess);

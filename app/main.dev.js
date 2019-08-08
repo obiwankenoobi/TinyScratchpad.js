@@ -79,15 +79,20 @@ app.on('ready', async () => {
 
   const mb = menubar({
     show: false,
-    width: 600,
-    height: 800,
+    browserWindow: {
+      width: 600,
+      height: 800
+    },
     index:`file://${__dirname}/app.html`,
+    resizable: false
   });
 
   mb.on('ready', () => {
     console.log('Menubar app is ready.');
-    // your app code here
   });
+
+
+
 
   //mainWindow.loadURL(`file://${__dirname}/app.html`);
   

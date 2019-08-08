@@ -8,9 +8,13 @@ run snippets of code directly through the navbar.
 
 ✅ **ES6 support**
 
+✅ **Auto Complete**
+
 ✅ **Quick navbar access**
 
-✅ **See results right away**
+✅ **See results while you type**
+
+to Quit `Command + Q`
 
 <img src="https://media.giphy.com/media/mEQHHgyDm8LTzEag00/giphy.gif">
 
