@@ -1,5 +1,6 @@
 // @flow
 import { app, Menu, shell, BrowserWindow } from 'electron';
+import { menubar } from 'menubar';
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;

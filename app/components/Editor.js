@@ -7,6 +7,7 @@ import tmp                from 'tmp';
 import { ptyInstance   }  from "./PtyHelper";
 import { xtermInstance }  from "./XtermHelper";
 import ansiEscapes        from "ansi-escapes";
+import colors             from "../constants/colors"
 
 
 import "brace/mode/javascript";
@@ -55,39 +56,33 @@ class Editor extends Component {
 
     render() {
         return (
-            <AceEditor
-                ref={ref => this.editor = ref}
-                width="100%"
-                //width
-                placeholder={`  Start typing (:`}
-                mode="javascript"
-                theme="dracula"
-                name="blah2"
-                onLoad={(editor) => { 
-                    editor.renderer.setPadding(10);
-                    editor.$selectionStyle.backgroundColor = "red"
-                    console.log(editor)
-                    
-                 }}
-                onChange={this.onChange}
-                fontSize={14}
-                showPrintMargin={true}
-                showGutter={true}
-                value={``}
-                setOptions={{
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true,
-                    enableSnippets: true,
-                    showLineNumbers: true,
-                    tabSize: 2,
-                    highlightSelectedWord:true,
-                    highlightActiveLine:false,
-                    showGutter:false,
-                    selectionStyle: {
-                        backgroundColor: "blue"
-                    }
-                }}
-            />
+            <div style={{backgroundColor:colors.dracula.main, padding:10}}>
+                <AceEditor
+                    ref={ref => this.editor = ref}
+                    width="100%"
+                    //style={{marginTop:10}}
+                    placeholder={`  Start typing (:`}
+                    mode="javascript"
+                    theme="dracula"
+                    name="blah2"
+                    onChange={this.onChange}
+                    fontSize={14}
+                    showPrintMargin={true}
+                    showGutter={true}
+                    value={``}
+                    setOptions={{
+                        enableBasicAutocompletion: true,
+                        enableLiveAutocompletion: true,
+                        enableSnippets: true,
+                        showLineNumbers: true,
+                        tabSize: 2,
+                        highlightSelectedWord:true,
+                        highlightActiveLine:false,
+                        showGutter:false,
+                        cursorStyle:"ace"
+                    }}
+                />
+            </div>
         )
     }
       

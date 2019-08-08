@@ -71,7 +71,7 @@ app.on('ready', async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 600,
-    height: 800,
+    height: 820,
     webPreferences: {
       devTools: process.env.NODE_ENV === 'development' ? true : false
     }
@@ -81,7 +81,8 @@ app.on('ready', async () => {
     show: false,
     browserWindow: {
       width: 600,
-      height: 800
+      height: 820,
+      
     },
     index:`file://${__dirname}/app.html`,
     resizable: false

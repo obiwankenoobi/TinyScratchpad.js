@@ -1,5 +1,7 @@
 export default {
-    terminal: {
-        dracula:"#565968"
-    }
+        dracula:{
+            sub:"#565968",
+            main:"#282a36"
+        }
+    
 }

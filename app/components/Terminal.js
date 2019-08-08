@@ -15,7 +15,7 @@ class TerminalClass extends Component {
         super(props);       
         this.ptyProcess;
         this.xterm = new Terminal({  
-            theme: { background: colors.terminal.dracula, height:"100px" }
+            theme: { background: colors.dracula.sub, height:"100px" }
         });
     }
 
@@ -79,7 +79,7 @@ class TerminalClass extends Component {
                 justifyItems:"center",
                 display:"flex",
                 width:window.innerWidth,
-                backgroundColor:colors.terminal.dracula,
+                backgroundColor:colors.dracula.sub,
             }}>
             <div 
                 style={{width:"98%", height:"300px"}} 
