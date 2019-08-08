@@ -23,5 +23,5 @@ to Quit `Command + Q`
 
 to Save `Command + S`
 
-<!-- <img src="https://media.giphy.com/media/mEQHHgyDm8LTzEag00/giphy.gif"> -->
-<img src="speedup_opt2.gif"/>
+<img src="https://media.giphy.com/media/iJ1dvjp7EzI8RqjWMX/giphy.gif">
+
