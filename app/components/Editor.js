@@ -4,10 +4,19 @@ import * as babel         from "@babel/standalone";
 import * as path          from "path";
 import AceEditor          from "react-ace";
 import tmp                from 'tmp';
-import { ptyInstance   }  from "./PtyHelper";
-import { xtermInstance }  from "./XtermHelper";
+import { ptyInstance   }  from "../Helpers/PtyHelper";
+import { Keyboard   }     from "../Helpers/Keyboard";
+import { xtermInstance }  from "../Helpers/XtermHelper";
+import { savingHelper }   from "../Helpers/SavingHelper";
 import ansiEscapes        from "ansi-escapes";
 import colors             from "../constants/colors"
+import electron           from "electron";
+import mousetrap          from "mousetrap";
+import { exec }           from "child_process";
+
+
+const { remote: { dialog }, ipcRenderer } = electron;
+const keyboard = new Keyboard()
 
 
 import "brace/mode/javascript";
@@ -22,12 +31,32 @@ import "brace/ext/language_tools";
 
 tmp.setGracefulCleanup();
 
+console.log("mousetrap", mousetrap)
+
 
 class Editor extends Component {
     constructor(props) {
         super(props);
         this.timer  = null;
         this.tmpobj = tmp.fileSync({postfix: '.js', dir:"/var/tmp" });
+    }
+
+    componentWillUnmount() {
+        keyboard.removeSaveListener();
+    }
+
+    componentDidMount() {
+        keyboard.addSaveListener(this.save)
+    }
+
+    save = () => {
+        console.log("binding shortcut")
+        dialog.showSaveDialog(null, {
+          defaultPath:this.tmpobj.name
+        }, path => {
+          exec(`cp ${this.tmpobj.name} ${path}`)
+          console.log("file " + this.tmpobj.name + " was saveed to " + path)
+        })
     }
 
     onChange = newValue => {

@@ -238,6 +238,7 @@
     "history": "^4.7.2",
     "menubar": "^6.0.7",
     "monaco-editor": "^0.17.1",
+    "mousetrap": "^1.6.3",
     "node-pty": "^0.8.1",
     "react": "^16.6.3",
     "react-ace": "^7.0.2",

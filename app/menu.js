@@ -73,7 +73,14 @@ export default class MenuBuilder {
           click: () => {
             app.quit();
           }
-        }
+        },
+        // {
+        //   label: 'Save',
+        //   accelerator: 'Command+S',
+        //   click: () => {
+        //     console.log("save")
+        //   }
+        // }
       ]
     };
     const subMenuEdit = {

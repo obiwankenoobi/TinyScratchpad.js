@@ -17,6 +17,7 @@ run snippets of code directly through the navbar.
 ✅ **See results in live**
 
 to Quit `Command + Q`
+to Save `Command + S`
 
 <img src="https://media.giphy.com/media/mEQHHgyDm8LTzEag00/giphy.gif">
 

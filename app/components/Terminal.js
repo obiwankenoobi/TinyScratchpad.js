@@ -3,8 +3,8 @@ import * as fit             from 'xterm/lib/addons/fit/fit';
 import * as os              from "os";
 import * as pty             from "node-pty";
 import { Terminal }         from "xterm";
-import { ptyInstance   }    from "./PtyHelper";
-import { xtermInstance }    from "./XtermHelper";
+import { ptyInstance   }    from "../Helpers/PtyHelper";
+import { xtermInstance }    from "../Helpers/XtermHelper";
 import colors               from "../constants/colors"
 import ansiEscapes          from "ansi-escapes";
 

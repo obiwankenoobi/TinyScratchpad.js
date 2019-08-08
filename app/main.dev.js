@@ -10,11 +10,14 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, globalShortcut, dialog, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import { menubar } from 'menubar';
 import MenuBuilder from './menu';
+import { savingHelper }  from "./Helpers/SavingHelper";
+import * as fs            from "fs";
+import { exec } from "child_process";
 
 export default class AppUpdater {
   constructor() {
@@ -60,6 +63,14 @@ app.on('window-all-closed', () => {
   }
 });
 
+app.on('will-quit', () => {
+  // Unregister a shortcut.
+  // globalShortcut.unregister('Command+S')
+
+  // Unregister all shortcuts.
+  globalShortcut.unregisterAll()
+});
+
 app.on('ready', async () => {
   if (
     process.env.NODE_ENV === 'development' ||
@@ -67,6 +78,8 @@ app.on('ready', async () => {
   ) {
     await installExtensions();
   }
+
+
 
   mainWindow = new BrowserWindow({
     show: false,
