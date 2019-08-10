@@ -28,11 +28,22 @@ const { remote: { dialog }, ipcRenderer } = electron;
 const keyboard = new Keyboard();
 tmp.setGracefulCleanup();
 
+const lang = {
+    env:"node",
+    ext:".jx"
+}
+
+let pathRegEX;
+let firstLine;
+let splitted;
+let env;
+
 class Editor extends Component {
     constructor(props) {
         super(props);
         this.timer  = null;
-        this.tmpobj = tmp.fileSync({prefix:"srtch-",  postfix: '.js', dir:"/var/tmp" });
+        this.tmpobj = tmp.fileSync({prefix:"srtch-", postfix:".js", dir:"/var/tmp" });
+
     }
 
     componentWillUnmount() {
@@ -40,21 +51,35 @@ class Editor extends Component {
     }
 
     componentDidMount() {
-        keyboard.addSaveListener(this.save)
+        keyboard.addSaveListener(this.save);        
     }
 
     save = () => {
         dialog.showSaveDialog(null, {
           defaultPath:this.tmpobj.name
         }, path => {
-          exec(`cp ${this.tmpobj.name} ${path}`)
+          exec(`cp ${this.tmpobj.name} ${path}`);
         })
     }
 
     onChange = newValue => {
-        this.createExecutable(newValue)
+
+        if (this.editor.editor.getCursorPosition().row === 0) {
+            pathRegEX = RegExp(/\/\*.*\*\//g);
+            firstLine = this.editor.editor.session.getLine(0);
+            splitted = firstLine.slice(2, -2).trim().split("/")
+            env = splitted[splitted.length - 1]
+        }
+
+        this.createExecutable(newValue);
         this.setTimer(() => {
-            ptyInstance.instance.write(`node ${this.tmpobj.name}\n`);
+            if (pathRegEX.test(firstLine)) {
+                const trimmedLine = firstLine.slice(2, -2).trim();
+                const prefix = trimmedLine[0] === "/" ? "" : "/"
+                ptyInstance.instance.write(`${prefix + trimmedLine + " "} ${this.tmpobj.name}\n`);
+            } else {
+                ptyInstance.instance.write(`node ${this.tmpobj.name}\n`);
+            }
         })
         
     }
