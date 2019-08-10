@@ -19,9 +19,33 @@ run snippets of code directly through the navbar.
 
 ✅ **Save script**
 
-to Quit `Command + Q`
+## To Use
+**The tool will try detect node from /usr/local/bin/node in case your binary isnt there you might specify it manually following the instruction below**
 
-to Save `Command + S`
+* **in the first line please specify the path to `node` like so**
+  ```
+  /* /usr/local/bin/node */
+
+  // rest of your code
+  ```
+
+* to Quit `Command + Q`
+
+* to Save `Command + S`
 
 <img src="https://media.giphy.com/media/iJ1dvjp7EzI8RqjWMX/giphy.gif">
+
+## Development
+
+```
+$ git clone https://github.com/obiwankenoobi/TinyScratchpad.js.git
+$ yarn
+$ yarn dev
+```
+
+### To create package from source 
+
+```
+$ git package
+```
 
