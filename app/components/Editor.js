@@ -13,6 +13,9 @@ import colors             from "../constants/colors"
 import electron           from "electron";
 import mousetrap          from "mousetrap";
 import { exec }           from "child_process";
+import shell              from "shelljs"; 
+
+
 
 import "brace/mode/javascript";
 import "brace/theme/monokai";
@@ -75,10 +78,14 @@ class Editor extends Component {
         this.setTimer(() => {
             if (pathRegEX.test(firstLine)) {
                 const trimmedLine = firstLine.slice(2, -2).trim();
-                const prefix = trimmedLine[0] === "/" ? "" : "/"
+                //const prefix = trimmedLine[0] === "/" ? "" : "/"
+                const prefix = trimmedLine[0] === "/" ? "" : "";
                 ptyInstance.instance.write(`${prefix + trimmedLine + " "} ${this.tmpobj.name}\n`);
             } else {
-                ptyInstance.instance.write(`node ${this.tmpobj.name}\n`);
+                const nodeLocation = shell.which("node");
+                if (nodeLocation) {
+                    ptyInstance.instance.write(`${nodeLocation.stdout} ${this.tmpobj.name}\n`);
+                }
             }
         })
         
