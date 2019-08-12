@@ -1,6 +1,6 @@
 {
   "name": "mini-editor",
-  "productName": "MiniEditor",
+  "productName": "TinyScratchpad",
   "version": "0.17.1",
   "description": "Mininavbar javascript editor",
   "scripts": {
@@ -58,7 +58,7 @@
   },
   "main": "./app/main.prod.js",
   "build": {
-    "productName": "MiniEditor",
+    "productName": "TinyScratchpad",
     "appId": "org.develar.ElectronReact",
     "files": [
       "app/dist/",

@@ -7,17 +7,18 @@ run snippets of code directly through the navbar.
 <br>
 <br>
 
-✅ **ES6 support**
+🔥 **ES6 support**
 
-✅ **Auto Complete**
+🔥 **Auto Complete**
 
-✅ **Quick navbar access**
+🔥 **Quick navbar access**
 
-✅ **Complete Shell in terminal**
+🔥 **Complete Shell in terminal**
 
-✅ **Code run while typing**
+🔥 **Code run while typing**
 
-✅ **Save script**
+🔥 **Save script**
+
 
 ## To Use
 **The tool will try detect node from /usr/local/bin/node in case your binary isnt there you might specify it manually following the instruction below**
