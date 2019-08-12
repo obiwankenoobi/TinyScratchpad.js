@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import { app, BrowserWindow, globalShortcut, dialog, ipcMain } from 'electron';
+import { app, BrowserWindow, globalShortcut, dialog, ipcMain, Notification } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import { menubar } from 'menubar';
@@ -75,6 +75,20 @@ app.on('ready', async () => {
   ) {
     await installExtensions();
   }
+
+  // notification setup 
+  // if (Notification.isSupported()) {
+  //   const notification = new Notification({
+  //     actions: {
+  //       type:"button",
+  //       text:"update"
+  //     },
+  //     title: "TinyScratchpad.js",
+  //     body: "Update available! Download the latest version to enjoy all our new features!"
+  //   });
+  //   notification.on("show", () => console.log("notification called"))
+  //   notification.show();
+  // }
 
 
 
