@@ -2,13 +2,16 @@ import React, {Component} from "react"
 import * as fs            from "fs";
 import * as babel         from "@babel/standalone";
 import AceEditor          from "react-ace";
+import ansiEscapes        from "ansi-escapes";
 import tmp                from 'tmp';
 import electron           from "electron";
 import fixPath            from "fix-path";
 import { exec }           from "child_process";
 import { ptyInstance   }  from "../Helpers/PtyHelper";
+import { xtermInstance }    from "../Helpers/XtermHelper";
 import { Keyboard   }     from "../Helpers/Keyboard";
 import colors             from "../constants/colors"
+
 
 
 import "brace/mode/javascript";
@@ -26,10 +29,6 @@ const keyboard = new Keyboard();
 tmp.setGracefulCleanup();
 fixPath();
 
-const lang = {
-    env:"node",
-    ext:".jx"
-}
 
 let pathRegEX;
 let firstLine;
@@ -44,13 +43,14 @@ class Editor extends Component {
 
     }
 
+    componentDidMount() {
+        keyboard.addSaveListener(this.save);        
+    }
+
     componentWillUnmount() {
         keyboard.removeSaveListener();
     }
 
-    componentDidMount() {
-        keyboard.addSaveListener(this.save);        
-    }
 
     save = () => {
         dialog.showSaveDialog(null, {
@@ -62,6 +62,7 @@ class Editor extends Component {
 
     onChange = newValue => {
 
+        // check if user need custom path for their node binary
         if (this.editor.editor.getCursorPosition().row === 0) {
             pathRegEX = RegExp(/\/\*.*\*\//g);
             firstLine = this.editor.editor.session.getLine(0);
@@ -71,11 +72,13 @@ class Editor extends Component {
 
         this.createExecutable(newValue);
         this.setTimer(async () => {
+            xtermInstance.instance.write(ansiEscapes.clearTerminal);
+
             if (pathRegEX.test(firstLine)) {
+               
                 const trimmedLine = firstLine.slice(2, -2).trim();
-                //const prefix = trimmedLine[0] === "/" ? "" : "/"
                 const prefix = trimmedLine[0] === "/" ? "" : "";
-                ptyInstance.instance.write(`${prefix + trimmedLine + " "} ${this.tmpobj.name}\n`);
+                ptyInstance.instance.write(`${prefix} ${trimmedLine} ${this.tmpobj.name}\n`);
             } else {
                 exec('which node', (error, stdout, stderr) => {
                     if (error) alert(`exec error: ${error}`); 
@@ -85,6 +88,12 @@ class Editor extends Component {
         })
         
     }
+
+    asyncSetState = newState =>  
+        new Promise((resolve) => {
+            this.setState(newState, resolve);
+        });
+    
 
     createExecutable = data => {
         try {
@@ -103,6 +112,7 @@ class Editor extends Component {
     }
 
     render() {
+
         return (
             <div style={{backgroundColor:colors.dracula.main, padding:10}}>
                 <AceEditor

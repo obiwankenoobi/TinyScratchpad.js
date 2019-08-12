@@ -4,7 +4,6 @@ import * as os              from "os";
 import * as pty             from "node-pty";
 import { Terminal }         from "xterm";
 import colors               from "../constants/colors"
-import ansiEscapes          from "ansi-escapes";
 
 
 import { ptyInstance   }    from "../Helpers/PtyHelper";
@@ -26,12 +25,15 @@ class TerminalClass extends Component {
     }
 
     componentDidMount() {
-
-
-
         this.initTerminal();
-        setTimeout(() => this.setState({ loading:false }), 1500)
+        setTimeout(() => this.setState({ loading:false }), 1500);
     }
+
+    asyncSetState = newState =>  
+        new Promise((resolve) => {
+            this.setState(newState, resolve);
+        });
+
 
     initTerminal = () => {
         process.env.PROMPT_EOL_MARK = "";
