@@ -1,12 +1,10 @@
 // @flow
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import routes from '../constants/routes';
-import styles from './Home.css';
+import fixPath from "fix-path";
 import Terminal from './Terminal';
 import Editor from './Editor';
-//import { xtermInstance } from "./XtermHelper";
-
+import styles from './Home.css';
+fixPath();
 
 type Props = {};
 

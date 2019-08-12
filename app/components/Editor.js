@@ -1,20 +1,14 @@
 import React, {Component} from "react"
 import * as fs            from "fs";
 import * as babel         from "@babel/standalone";
-import * as path          from "path";
 import AceEditor          from "react-ace";
 import tmp                from 'tmp';
+import electron           from "electron";
+import fixPath            from "fix-path";
+import { exec }           from "child_process";
 import { ptyInstance   }  from "../Helpers/PtyHelper";
 import { Keyboard   }     from "../Helpers/Keyboard";
-import { xtermInstance }  from "../Helpers/XtermHelper";
-import { savingHelper }   from "../Helpers/SavingHelper";
-import ansiEscapes        from "ansi-escapes";
 import colors             from "../constants/colors"
-import electron           from "electron";
-import mousetrap          from "mousetrap";
-import { exec }           from "child_process";
-import shell              from "shelljs"; 
-
 
 
 import "brace/mode/javascript";
@@ -30,6 +24,7 @@ import "brace/ext/language_tools";
 const { remote: { dialog }, ipcRenderer } = electron;
 const keyboard = new Keyboard();
 tmp.setGracefulCleanup();
+fixPath();
 
 const lang = {
     env:"node",
@@ -75,17 +70,17 @@ class Editor extends Component {
         }
 
         this.createExecutable(newValue);
-        this.setTimer(() => {
+        this.setTimer(async () => {
             if (pathRegEX.test(firstLine)) {
                 const trimmedLine = firstLine.slice(2, -2).trim();
                 //const prefix = trimmedLine[0] === "/" ? "" : "/"
                 const prefix = trimmedLine[0] === "/" ? "" : "";
                 ptyInstance.instance.write(`${prefix + trimmedLine + " "} ${this.tmpobj.name}\n`);
             } else {
-                const nodeLocation = shell.which("node");
-                if (nodeLocation) {
-                    ptyInstance.instance.write(`${nodeLocation.stdout} ${this.tmpobj.name}\n`);
-                }
+                exec('which node', (error, stdout, stderr) => {
+                    if (error) alert(`exec error: ${error}`); 
+                    else ptyInstance.instance.write(`${stdout.slice(0, stdout.length - 1)} ${this.tmpobj.name}\n`);
+                });
             }
         })
         
